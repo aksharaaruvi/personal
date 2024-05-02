@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formykunu</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Inria Serif', serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .button {
+            padding: 5px 7px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inria Serif', serif;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .question-field {
+            margin-top: 20px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            color: black;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 80%;
+            text-align: center;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            font-family: 'Inria Serif', serif;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h3>Hey birthday boy !</h3>
+        <button class="button" onclick="playAudio()">Touch Mee . .</button>
+    </div>
+
+    <div id="surpriseContent" class="hidden">
+        <p>If you want to go in, you have to answer a question ..</p>
+        <p>Here's your question !</p>
+        <div class="question-field">
+            <label for="question">Where is the place we heard this bag-music together for the first time?</label>
+        </div>
+        <div class="question-field">
+            <p>Choose your answer:</p>
+            <label for="answer1"><input type="radio" id="answer1" name="answer" value="1"> OurHub(Brocamp)</label><br>
+            <label for="answer2"><input type="radio" id="answer2" name="answer" value="2"> Beach</label><br>
+            <label for="answer3"><input type="radio" id="answer3" name="answer" value="3"> Your Hostel room</label><br>
+        </div>
+        <button class="button" onclick="showModal()">Enter</button>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <h2>Edaa kunuuuu !</h2>
+            <p>Ne killaadi alle , sathyam para ne killadi alle...</p>
+            <p>May or maynot you can simply kiss me and continue !</p>
+            <button class="modal-button" onclick="redirectToAnotherPage()">Go to Surprise</button>
+        </div>
+    </div>
+
+    <audio id="birthdayAudio" loop>
+        <source src="/static/kunu/kunu.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function playAudio() {
+            var audio = document.getElementById('birthdayAudio');
+            audio.muted = false;
+            audio.play(); 
+            document.querySelector('button').style.display = 'none';
+
+            document.getElementById('surpriseContent').classList.remove('hidden');
+        }
+
+        function showModal() {
+            var answer = document.querySelector('input[name="answer"]:checked');
+
+            if (answer) {
+                document.getElementById('myModal').style.display = 'flex';
+            } else {
+                alert('Please select an answer!');
+            }
+        }
+
+        function redirectToAnotherPage() {
+            window.location.href = "{% url 'him' %}";
+        }
+    </script>
+</body>
+
+</html>
